@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>$ZTICH — Ztich doesn’t care. The coin is on Solana.</title>
+  <meta name="description" content="Ztich is the mascot. He doesn’t give a fuck. $ZTICH is a Solana meme coin — 0/0 tax. Check the CA before you buy." />
+  <meta property="og:title" content="$ZTICH — Ztich doesn’t care." />
+  <meta property="og:description" content="The mascot doesn’t give a fuck. The coin is $ZTICH on Solana. Zero tax." />
+  <meta property="og:image" content="/ztich-coin.jpg?v=2" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/ztich-coin.jpg?v=2" type="image/jpeg" />
+  <link rel="preload" as="image" href="/ztich-coin.jpg?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest: #0b1a12;
+      --moss: #163528;
+      --leaf: #2f6b45;
+      --lime: #c8ff1a;
+      --acid: #9dff00;
+      --gold: #ffe14a;
+      --gold-bright: #fff06a;
+      --ear: #f0e07a;
+      --cream: #f4f1e6;
+      --muted: #8fa897;
+      --gutter: max(clamp(1rem, 4vw, 2.75rem), calc((100% - 72rem) / 2));
+      --tg: #2aabee;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Outfit, system-ui, sans-serif;
+      background: #060d09;
+      color: var(--cream);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 4.5rem;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* —— Marquee —— */
+    .tape {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      background: linear-gradient(90deg, var(--acid), var(--gold), var(--acid));
+      background-size: 200% 100%;
+      color: var(--forest);
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      animation: tape-shift 6s linear infinite;
+    }
+
+    @keyframes tape-shift {
+      to { background-position: 200% 0; }
+    }
+
+    .tape-track {
+      display: inline-block;
+      padding: 0.7rem 0;
+      animation: marquee 32s linear infinite;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* —— Background —— */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 120% 90% at 70% 40%, #0d2418 0%, #08140e 55%, #050a07 100%);
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      will-change: transform;
+    }
+
+    .blob.b1 {
+      width: 55vw; height: 55vw;
+      left: -18vw; top: -22vw;
+      background: radial-gradient(circle, rgba(157, 255, 0, 0.30), transparent 65%);
+      animation: drift-a 22s ease-in-out infinite alternate;
+    }
+
+    .blob.b2 {
+      width: 50vw; height: 50vw;
+      right: -12vw; bottom: -20vw;
+      background: radial-gradient(circle, rgba(0, 235, 160, 0.30), transparent 65%);
+      animation: drift-b 26s ease-in-out infinite alternate;
+    }
+
+    .blob.b3 {
+      width: 38vw; height: 38vw;
+      right: 8vw; top: 12vh;
+      background: radial-gradient(circle, rgba(255, 225, 74, 0.20), transparent 65%);
+      animation: drift-c 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift-a { to { transform: translate(14vw, 12vh) scale(1.15); } }
+    @keyframes drift-b { to { transform: translate(-16vw, -10vh) scale(1.1); } }
+    @keyframes drift-c { to { transform: translate(-6vw, 10vh) scale(1.2); } }
+
+    .bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E") 0 0 / 200px,
+        radial-gradient(ellipse at 60% 50%, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+      background-blend-mode: soft-light, normal;
+      opacity: 0.9;
+    }
+
+    /* —— 3D stage —— */
+    .stage {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 45vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
+
+    .stage::before {
+      content: "";
+      position: absolute;
+      width: min(120%, 100vh);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(157, 255, 0, 0.20), rgba(255, 225, 74, 0.07) 40%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .stage::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 6vh;
+      width: min(70%, 62vh);
+      height: 9vh;
+      translate: -50% 0;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(157, 255, 0, 0.45), rgba(157, 255, 0, 0.12) 45%, transparent 70%);
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    model-viewer {
+      position: relative;
+      width: 100%;
+      height: 85vh;
+      background: transparent;
+      --poster-color: transparent;
+      --progress-bar-color: transparent;
+      --progress-bar-height: 0px;
+      --progress-mask: transparent;
+      outline: none;
+      pointer-events: none;
+      touch-action: pan-y;
+      opacity: 0;
+      transition: opacity 0.55s ease;
+    }
+
+    model-viewer.is-ready {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Kill any leftover poster/slot flash before the GLB is ready */
+    model-viewer:not(.is-ready)::part(default-progress-bar),
+    model-viewer:not(.is-ready)::part(poster) {
+      display: none !important;
+      opacity: 0 !important;
+    }
+
+    /* —— Panels —— */
+    .panel {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      align-content: center;
+      padding: 2rem var(--gutter);
+    }
+
+    .panel > * { max-width: 36rem; }
+
+    .panel-tight {
+      min-height: auto;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .hero {
+      min-height: calc(100vh - 2.5rem);
+      min-height: calc(100dvh - 2.5rem);
+      grid-template-rows: 1fr;
+      align-content: stretch;
+      padding-top: 1.25rem;
+      padding-bottom: 2rem;
+    }
+
+    /* Fixed chrome: tape on top, nav under — hide on scroll down */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      padding: 0;
+      transform: translateY(0);
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                  background 0.28s ease,
+                  box-shadow 0.28s ease,
+                  border-color 0.28s ease;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      pointer-events: none;
+    }
+
+    .site-nav > .tape,
+    .site-nav > nav {
+      pointer-events: auto;
+    }
+
+    .site-nav.is-solid {
+      background: linear-gradient(
+        180deg,
+        rgba(8, 18, 12, 0.38) 0%,
+        rgba(8, 18, 12, 0.22) 100%
+      );
+      backdrop-filter: blur(28px) saturate(1.45);
+      -webkit-backdrop-filter: blur(28px) saturate(1.45);
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 10px 36px rgba(0, 0, 0, 0.12);
+    }
+
+    .site-nav.is-hidden {
+      transform: translateY(-110%);
+    }
+
+    .site-nav > nav {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1.15rem;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0.75rem var(--gutter);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: 0.06em;
+      color: var(--lime);
+      text-shadow: 0 0 18px rgba(157, 255, 0, 0.55), 0 0 2px rgba(255, 225, 74, 0.4);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .site-nav .links {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 1.15rem;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .site-nav .links a {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .site-nav a:hover { color: var(--lime); }
+
+    /* Reserves space for fixed tape + nav */
+    .site-nav-spacer {
+      height: 5.75rem;
+      pointer-events: none;
+    }
+
+    .hero-main {
+      display: grid;
+      align-content: center;
+      gap: clamp(1rem, 2.5vw, 1.35rem);
+      padding: 2rem 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .coin-float {
+      width: min(9.5rem, 42vw);
+      height: auto;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+      animation:
+        rise 0.7s ease both,
+        coin-bob 5s ease-in-out 0.7s infinite;
+      filter: drop-shadow(0 12px 28px rgba(157, 255, 0, 0.28))
+              drop-shadow(0 4px 18px rgba(255, 225, 74, 0.22));
+    }
+
+    @keyframes coin-bob {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-10px) rotate(3deg); }
+    }
+
+    .ticker {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(4.5rem, 16vw, 9.5rem);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      background: linear-gradient(115deg, var(--acid) 0%, var(--gold) 42%, var(--lime) 68%, var(--ear) 100%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation:
+        slam 0.55s cubic-bezier(0.22, 1, 0.36, 1) both,
+        shine 4.5s ease-in-out 0.6s infinite;
+    }
+
+    @keyframes shine {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .tagline {
+      font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+      font-weight: 500;
+      max-width: 30ch;
+      line-height: 1.45;
+      animation: rise 0.7s ease 0.15s both;
+    }
+
+    .tagline em {
+      font-style: normal;
+      color: var(--lime);
+      text-shadow: 0 0 16px rgba(200, 255, 26, 0.45);
+    }
+
+    /* His line — not the site's. Small cite, no bubble, no theatrics. */
+    .said {
+      margin: 0.15rem 0 0.2rem;
+      padding: 0;
+      border: 0;
+      animation: rise 0.7s ease 0.2s both;
+    }
+
+    .said p {
+      font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+      font-weight: 500;
+      line-height: 1.3;
+      max-width: 22ch;
+      color: var(--cream);
+    }
+
+    .said cite {
+      display: block;
+      margin-top: 0.45rem;
+      font-style: normal;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.2rem;
+      animation: rise 0.7s ease 0.25s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 1.05rem 1.65rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      border-radius: 0.85rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--acid), var(--gold));
+      border-color: transparent;
+      color: var(--forest);
+      box-shadow: 0 10px 28px rgba(157, 255, 0, 0.18);
+      animation: pulse-cta 2.4s ease-in-out 1.2s infinite;
+    }
+
+    @keyframes pulse-cta {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(157, 255, 0, 0.35); }
+      50% { box-shadow: 0 0 0 8px rgba(157, 255, 0, 0); }
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(157, 255, 0, 0.35);
+      animation: none;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--lime);
+      border-color: rgba(200, 255, 26, 0.22);
+      backdrop-filter: blur(8px);
+      font-weight: 600;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255, 225, 74, 0.45);
+      color: var(--gold);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn.copied {
+      background: var(--leaf);
+      border-color: var(--leaf);
+      color: var(--cream);
+    }
+
+    .trust-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      animation: rise 0.7s ease 0.35s both;
+    }
+
+    .trust-line span::before {
+      content: "";
+      display: inline-block;
+      width: 0.4rem;
+      height: 0.4rem;
+      margin-right: 0.45rem;
+      border-radius: 50%;
+      background: var(--acid);
+      box-shadow: 0 0 8px var(--acid);
+      vertical-align: middle;
+    }
+
+    /* —— Section chrome —— */
+    .section-kicker {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.65rem;
+    }
+
+    .section-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      margin-bottom: 1rem;
+      background: linear-gradient(110deg, var(--acid), var(--gold) 55%, var(--lime));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .section-lead {
+      max-width: 36ch;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      color: rgba(244, 241, 230, 0.88);
+      margin-bottom: 1.75rem;
+    }
+
+    .section-lead em {
+      font-style: normal;
+      color: var(--lime);
+    }
+
+    /* —— How to buy —— */
+    .steps {
+      display: grid;
+      gap: 1.35rem;
+      max-width: 36rem;
+      list-style: none;
+      counter-reset: buy;
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+      counter-increment: buy;
+    }
+
+    .steps li::before {
+      content: counter(buy, decimal-leading-zero);
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.75rem;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      line-height: 1;
+      padding-top: 0.15rem;
+    }
+
+    .steps h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--cream);
+    }
+
+    .steps p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: rgba(244, 241, 230, 0.75);
+    }
+
+    .steps a {
+      color: var(--lime);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* —— Community / Telegram (sleek glass) —— */
+    .community-panel > * { max-width: 42rem; }
+
+    .tg-shell {
+      --tg-glass: rgba(7, 16, 12, 0.72);
+      --tg-bubble: rgba(255, 255, 255, 0.04);
+      position: relative;
+      margin-top: 0.75rem;
+      max-width: 42rem;
+      height: min(34rem, 72vh);
+      display: grid;
+      grid-template-rows: auto 1fr auto auto;
+      overflow: hidden;
+      border: 0;
+      border-radius: 1.5rem;
+      background:
+        linear-gradient(160deg, rgba(200, 255, 26, 0.05) 0%, transparent 45%),
+        linear-gradient(320deg, rgba(255, 225, 74, 0.03) 0%, transparent 40%),
+        var(--tg-glass);
+      backdrop-filter: blur(32px) saturate(1.4);
+      -webkit-backdrop-filter: blur(32px) saturate(1.4);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.09),
+        0 40px 100px rgba(0, 0, 0, 0.35);
+      isolation: isolate;
+    }
+
+    .tg-head {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.95rem 1.1rem;
+      background: transparent;
+      border-bottom: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tg-head::after {
+      content: "";
+      position: absolute;
+      left: 1.1rem;
+      right: 1.1rem;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200, 255, 26, 0.22), transparent);
+    }
+
+    .tg-avatar {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 0;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(200, 255, 26, 0.35), 0 0 18px rgba(157, 255, 0, 0.2);
+    }
+
+    .tg-meta { min-width: 0; flex: 1; }
+
+    .tg-meta strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tg-meta span {
+      font-size: 0.7rem;
+      color: rgba(143, 168, 151, 0.9);
+      font-weight: 450;
+    }
+
+    .tg-live {
+      margin-left: auto;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(200, 255, 26, 0.85);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(157, 255, 0, 0.08);
+    }
+
+    .tg-live::before {
+      content: "";
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 50%;
+      background: var(--acid);
+      box-shadow: 0 0 8px var(--acid);
+      animation: blink 1.4s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    .tg-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      padding: 1rem 1rem 0.75rem;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scroll-behavior: smooth;
+      background: transparent;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tg-feed::-webkit-scrollbar { width: 3px; }
+    .tg-feed::-webkit-scrollbar-thumb {
+      background: rgba(200, 255, 26, 0.22);
+      border-radius: 99px;
+    }
+
+    .tg-day {
+      align-self: center;
+      margin: 0.15rem 0 0.35rem;
+      padding: 0.22rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: rgba(143, 168, 151, 0.85);
+      text-transform: uppercase;
+    }
+
+    .tg-row {
+      display: grid;
+      grid-template-columns: 2rem minmax(0, 1fr);
+      gap: 0.55rem;
+      align-items: end;
+      max-width: 90%;
+      animation: tg-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .tg-row.is-reply { max-width: 93%; }
+
+    @keyframes tg-in {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tg-face {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--forest);
+      flex-shrink: 0;
+      user-select: none;
+      opacity: 0.95;
+    }
+
+    .tg-bubble {
+      position: relative;
+      background: var(--tg-bubble);
+      border: 0;
+      border-radius: 1.05rem 1.05rem 1.05rem 0.3rem;
+      padding: 0.55rem 0.85rem 0.4rem;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .tg-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.18rem;
+      color: var(--lime);
+    }
+
+    .tg-name.admin { color: var(--gold); }
+    .tg-name.him { color: var(--cream); letter-spacing: 0.04em; }
+    .tg-name.whale { color: #8fd4ff; }
+    .tg-name.pink { color: #ff9ed0; }
+    .tg-name.orange { color: #ffc15e; }
+
+    .tg-reply {
+      display: grid;
+      grid-template-columns: 2px 1fr;
+      gap: 0.5rem;
+      margin: 0.05rem 0 0.4rem;
+      padding: 0.15rem 0 0.15rem 0.1rem;
+      border-radius: 0;
+      background: transparent;
+      cursor: default;
+    }
+
+    .tg-reply::before {
+      content: "";
+      width: 2px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--acid), rgba(157, 255, 0, 0.25));
+    }
+
+    .tg-reply-who {
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: rgba(200, 255, 26, 0.9);
+      line-height: 1.2;
+    }
+
+    .tg-reply-text {
+      font-size: 0.7rem;
+      color: rgba(244, 241, 230, 0.5);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+
+    .tg-text {
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: rgba(244, 241, 230, 0.92);
+      word-wrap: break-word;
+      font-weight: 450;
+    }
+
+    .tg-meta-line {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.28rem;
+    }
+
+    .tg-react {
+      margin-right: auto;
+      font-size: 0.68rem;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 0;
+      color: rgba(244, 241, 230, 0.85);
+      line-height: 1.3;
+    }
+
+    .tg-time {
+      font-size: 0.6rem;
+      color: rgba(143, 168, 151, 0.7);
+      letter-spacing: 0.03em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tg-typing {
+      display: none;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0 1.1rem 0.35rem;
+      min-height: 1.4rem;
+      font-size: 0.72rem;
+      color: rgba(143, 168, 151, 0.85);
+      position: relative;
+      z-index: 1;
+    }
+
+    .tg-typing.on { display: flex; }
+
+    .tg-dots {
+      display: inline-flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .tg-dots i {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--lime);
+      opacity: 0.35;
+      animation: tg-dot 1.2s ease-in-out infinite;
+    }
+
+    .tg-dots i:nth-child(2) { animation-delay: 0.15s; }
+    .tg-dots i:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes tg-dot {
+      0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-2px); }
+    }
+
+    .tg-composer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.6rem;
+      align-items: center;
+      padding: 0.85rem 1rem 1rem;
+      background: transparent;
+      border-top: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tg-composer::before {
+      content: "";
+      position: absolute;
+      left: 1.1rem;
+      right: 1.1rem;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    }
+
+    .tg-input {
+      border: 0;
+      outline: 0;
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(143, 168, 151, 0.95);
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 450;
+      padding: 0.78rem 1.05rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      text-align: left;
+    }
+
+    .tg-input:hover {
+      background: rgba(255, 255, 255, 0.075);
+      color: var(--cream);
+    }
+
+    .tg-join-mini {
+      padding: 0.78rem 1.15rem;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      border-radius: 999px !important;
+      border: 0 !important;
+      box-shadow: 0 8px 24px rgba(157, 255, 0, 0.18);
+      animation: none;
+    }
+
+    .tg-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      padding: 1rem 0 0;
+      max-width: 42rem;
+    }
+
+    .tg-actions .btn {
+      border-radius: 999px;
+    }
+
+    /* —— Mascot / clips —— */
+    .mascot.panel > * { max-width: min(42rem, 100%); }
+
+    .mascot-copy > p {
+      max-width: 38ch;
+      line-height: 1.6;
+      font-size: 1.15rem;
+      color: rgba(244, 241, 230, 0.88);
+    }
+
+    .mascot-copy .said {
+      margin: 1.25rem 0 0;
+    }
+
+    .mascot-copy .said p {
+      font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+      max-width: 20ch;
+    }
+
+    .clip-reel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 1.75rem;
+      max-width: 42rem;
+    }
+
+    .clip {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.1rem;
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 18px 40px rgba(0, 0, 0, 0.28);
+      aspect-ratio: 9 / 16;
+      max-height: 28rem;
+    }
+
+    .clip video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      background: #0a140f;
+    }
+
+    .clip::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      border-radius: inherit;
+    }
+
+    /* —— CA —— */
+    .ca {
+      margin-top: 0.25rem;
+      padding: 1.15rem 1.2rem;
+      border: 1px dashed rgba(143, 168, 151, 0.55);
+      font-size: 0.82rem;
+      word-break: break-all;
+      color: var(--muted);
+      max-width: 36rem;
+    }
+
+    .ca span {
+      display: block;
+      color: var(--lime);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .ca code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--cream);
+      font-size: 0.8rem;
+    }
+
+    .ca-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+
+    .ca-actions .btn {
+      padding: 0.75rem 1.1rem;
+      font-size: 0.75rem;
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      padding: 1.5rem var(--gutter) 2.5rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* —— Sticky mobile buy bar —— */
+    .buy-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      display: none;
+      gap: 0.55rem;
+      padding: 0.7rem 0.85rem calc(0.7rem + env(safe-area-inset-bottom));
+      background: rgba(6, 13, 9, 0.72);
+      border-top: 0;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(18px) saturate(1.2);
+    }
+
+    .buy-bar .btn {
+      flex: 1;
+      padding: 0.9rem 0.75rem;
+      font-size: 0.78rem;
+      border-radius: 0.85rem;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slam {
+      from { opacity: 0; transform: scale(1.06) translateY(14px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @media (max-width: 860px) {
+      body { padding-bottom: 5.25rem; }
+
+      .site-nav .links { gap: 0.85rem; }
+      .site-nav > nav { gap: 0.85rem; padding: 0.65rem var(--gutter); }
+      .site-nav-spacer { height: 5.35rem; }
+
+      .stage {
+        top: auto;
+        bottom: 4.5rem;
+        right: -22vw;
+        width: 78vw;
+        height: 36vh;
+        height: 36dvh;
+        opacity: 0.55;
+      }
+
+      .stage::before { width: min(100%, 42vh); }
+      .stage::after { display: none; }
+
+      model-viewer {
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .panel p, .trust-line, .ca, .section-lead, .steps p {
+        text-shadow: 0 1px 14px rgba(8, 18, 12, 0.85);
+      }
+
+      .hero-main { padding-top: 1.25rem; }
+      .coin-float { width: min(7.5rem, 38vw); }
+      .buy-bar { display: flex; }
+
+      .clip-reel {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.55rem;
+      }
+
+      .clip {
+        max-height: 22rem;
+        border-radius: 0.9rem;
+      }
+
+      .tg-shell {
+        height: min(28rem, calc(100dvh - 12.5rem));
+      }
+
+      .community-panel {
+        padding-bottom: 6rem;
+      }
+
+      .tg-actions { display: none; }
+
+      .hero { padding-top: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .site-nav.is-hidden {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <i class="blob b1"></i>
+    <i class="blob b2"></i>
+    <i class="blob b3"></i>
+  </div>
+
+  <header class="site-nav" id="site-nav">
+    <div class="tape" aria-hidden="true">
+      <div class="tape-track">
+        <span>$ZTICH · 0 / 0 TAX · SOLANA · CHECK THE CA · $ZTICH · 0 / 0 TAX · SOLANA · CHECK THE CA · </span>
+        <span>$ZTICH · 0 / 0 TAX · SOLANA · CHECK THE CA · $ZTICH · 0 / 0 TAX · SOLANA · CHECK THE CA · </span>
+      </div>
+    </div>
+    <nav aria-label="Primary">
+      <span class="brand-mark">$ZTICH</span>
+      <div class="links">
+        <a href="#buy">Buy guide</a>
+        <a href="#community">Chat</a>
+        <a href="https://pump.fun/coin/ZtiCh7xQm9Kp2nR4wY8sL3dF6hJ1aBcDeFgHiJkLmNo" target="_blank" rel="noopener">Buy</a>
+      </div>
+    </nav>
+  </header>
+  <div class="site-nav-spacer" aria-hidden="true"></div>
+
+  <div class="stage" id="stage">
+    <model-viewer
+      id="mascot-model"
+      src="/ztich.glb"
+      alt="Ztich mascot in 3D"
+      camera-controls
+      auto-rotate
+      auto-rotate-delay="0"
+      rotation-per-second="22deg"
+      interaction-prompt="none"
+      shadow-intensity="1"
+      shadow-softness="0.9"
+      exposure="0.95"
+      camera-orbit="25deg 80deg auto"
+      field-of-view="22deg"
+      min-camera-orbit="auto 40deg auto"
+      max-camera-orbit="auto 105deg auto"
+      disable-zoom
+      loading="eager"
+      reveal="manual"
+    ></model-viewer>
+  </div>
+
+  <header class="hero panel">
+    <div class="hero-main">
+      <img class="coin-float" src="/ztich-coin.jpg?v=2" alt="$ZTICH coin" width="160" height="160" />
+      <h1 class="ticker">$ZTICH</h1>
+      <p class="tagline"><em>Ztich</em> doesn’t give a fuck. This page just sells the coin.</p>
+      <blockquote class="said">
+        <p>Not my problem.</p>
+        <cite>— Ztich</cite>
+      </blockquote>
+      <div class="cta-row">
+        <a class="btn btn-primary" id="buy-now" href="https://pump.fun/coin/ZtiCh7xQm9Kp2nR4wY8sL3dF6hJ1aBcDeFgHiJkLmNo" target="_blank" rel="noopener">Buy $ZTICH</a>
+        <button type="button" class="btn btn-ghost copy-ca">Copy CA</button>
+      </div>
+      <div class="trust-line">
+        <span>0 / 0 tax</span>
+        <span>Solana</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="panel panel-tight" id="buy">
+    <p class="section-kicker">How to</p>
+    <h2 class="section-title">Buy $ZTICH</h2>
+    <p class="section-lead">He won’t walk you through it. We will.</p>
+    <ol class="steps">
+      <li>
+        <div>
+          <h3>Get a Solana wallet</h3>
+          <p>Phantom or Solflare. Fund it with SOL for the swap and fees.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Copy the contract</h3>
+          <p><button type="button" class="copy-ca" style="all:unset;cursor:pointer;color:var(--lime);text-decoration:underline;text-underline-offset:3px;font:inherit">Copy CA</button>. If it doesn’t match what’s below, don’t buy.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Swap</h3>
+          <p>Open <a href="https://pump.fun/coin/ZtiCh7xQm9Kp2nR4wY8sL3dF6hJ1aBcDeFgHiJkLmNo" target="_blank" rel="noopener">pump.fun</a> or Jupiter, paste the CA, confirm.</p>
+        </div>
+      </li>
+    </ol>
+    <div class="cta-row" style="margin-top:1.75rem;animation:none">
+      <a class="btn btn-primary" href="https://pump.fun/coin/ZtiCh7xQm9Kp2nR4wY8sL3dF6hJ1aBcDeFgHiJkLmNo" target="_blank" rel="noopener">Buy now</a>
+      <button type="button" class="btn btn-ghost copy-ca">Copy CA</button>
+    </div>
+  </section>
+
+  <section class="panel panel-tight community-panel" id="community">
+    <p class="section-kicker">Telegram</p>
+    <h2 class="section-title">The chat</h2>
+    <p class="section-lead">People talking about him. He almost never talks back.</p>
+
+    <div class="tg-shell" aria-label="Live Telegram-style chat preview">
+      <div class="tg-head">
+        <img class="tg-avatar" src="/ztich-coin.jpg?v=2" alt="" width="40" height="40" />
+        <div class="tg-meta">
+          <strong>Ztich Community</strong>
+          <span id="tg-online">12,847 members · 1,204 online</span>
+        </div>
+        <div class="tg-live">Live</div>
+      </div>
+
+      <div class="tg-feed" id="tg-feed" aria-live="polite"></div>
+
+      <div class="tg-typing" id="tg-typing" aria-hidden="true">
+        <span class="tg-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span id="tg-typing-label">someone is typing…</span>
+      </div>
+
+      <div class="tg-composer">
+        <button type="button" class="tg-input" id="tg-open" aria-label="Open Telegram to write">
+          Message…
+        </button>
+        <a class="btn btn-primary tg-join-mini" href="https://t.me/ztichcoin" target="_blank" rel="noopener">Join</a>
+      </div>
+    </div>
+
+    <div class="tg-actions">
+      <a class="btn btn-primary" href="https://t.me/ztichcoin" target="_blank" rel="noopener">Join Telegram</a>
+      <a class="btn btn-ghost" href="https://x.com/ztichcoin" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+  </section>
+
+  <section class="mascot panel" id="mascot">
+    <div class="mascot-copy">
+      <p class="section-kicker">The mascot</p>
+      <h2 class="section-title">Ztich</h2>
+      <p>
+        Baggy jeans. Flannel. Jewelry. He doesn’t run this site —
+        he barely looks at it. The clips are him. The rest is us.
+      </p>
+      <blockquote class="said">
+        <p>Whatever.</p>
+        <cite>— Ztich</cite>
+      </blockquote>
+      <div class="clip-reel">
+        <div class="clip">
+          <video
+            class="ztich-clip"
+            src="/clips/ztich-clip-1.mp4?v=3"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-label="Ztich clip one"
+          ></video>
+        </div>
+        <div class="clip">
+          <video
+            class="ztich-clip"
+            src="/clips/ztich-clip-2.mp4"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-label="Ztich clip two"
+          ></video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel panel-tight" id="about">
+    <p class="section-kicker">Contract</p>
+    <h2 class="section-title">The CA</h2>
+    <p class="section-lead">He won’t check it for you. Match this address before you buy.</p>
+    <div class="ca">
+      <span>Contract address</span>
+      <code id="ca-text">ZtiCh7xQm9Kp2nR4wY8sL3dF6hJ1aBcDeFgHiJkLmNo</code>
+      <div class="ca-actions">
+        <button type="button" class="btn btn-ghost copy-ca">Copy CA</button>
+        <a class="btn btn-primary" href="https://solscan.io/token/ZtiCh7xQm9Kp2nR4wY8sL3dF6hJ1aBcDeFgHiJkLmNo" target="_blank" rel="noopener">View on Solscan</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    $ZTICH ·
+    <a href="https://x.com/ztichcoin" target="_blank" rel="noopener">X</a> ·
+    <a href="https://t.me/ztichcoin" target="_blank" rel="noopener">Telegram</a>
+    · not financial advice · dyor · 2026
+  </footer>
+
+  <div class="buy-bar" role="region" aria-label="Quick buy">
+    <a class="btn btn-primary" href="https://pump.fun/coin/ZtiCh7xQm9Kp2nR4wY8sL3dF6hJ1aBcDeFgHiJkLmNo" target="_blank" rel="noopener">Buy $ZTICH</a>
+    <button type="button" class="btn btn-ghost copy-ca">Copy CA</button>
+  </div>
+
+  <script>
+    const CA = "ZtiCh7xQm9Kp2nR4wY8sL3dF6hJ1aBcDeFgHiJkLmNo";
+    const caEl = document.getElementById("ca-text");
+    if (caEl) caEl.textContent = CA;
+
+    async function copyCa(btn) {
+      try {
+        await navigator.clipboard.writeText(CA);
+        const original = btn.dataset.label || btn.textContent;
+        btn.dataset.label = original;
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = btn.dataset.label;
+          btn.classList.remove("copied");
+        }, 1600);
+      } catch {
+        btn.textContent = "Copy manually";
+      }
+    }
+
+    document.querySelectorAll(".copy-ca").forEach((btn) => {
+      btn.addEventListener("click", () => copyCa(btn));
+    });
+
+    /* Reveal 3D only after GLB is ready — avoids giant coin-poster flash on reload */
+    (() => {
+      const mv = document.getElementById("mascot-model");
+      if (!mv) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        mv.removeAttribute("auto-rotate");
+      }
+
+      const reveal = () => {
+        try { mv.dismissPoster(); } catch {}
+        mv.classList.add("is-ready");
+      };
+
+      if (mv.loaded) {
+        reveal();
+      } else {
+        mv.addEventListener("load", reveal, { once: true });
+        /* Fallback if load event is missed */
+        setTimeout(() => {
+          if (mv.loaded) reveal();
+        }, 8000);
+      }
+    })();
+
+    /* Play mascot clips only while in view */
+    (() => {
+      const clips = [...document.querySelectorAll(".ztich-clip")];
+      if (!clips.length) return;
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduceMotion) return;
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.35 });
+
+      clips.forEach((v) => io.observe(v));
+    })();
+
+    /* Nav: hide on scroll down, show on scroll up */
+    (() => {
+      const bar = document.getElementById("site-nav");
+      if (!bar) return;
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let lastY = window.scrollY;
+      let ticking = false;
+
+      const update = () => {
+        const y = window.scrollY;
+        const goingDown = y > lastY;
+        const delta = Math.abs(y - lastY);
+
+        if (y <= 24) {
+          bar.classList.remove("is-hidden", "is-solid");
+        } else {
+          bar.classList.add("is-solid");
+          if (!reduceMotion && delta > 4) {
+            bar.classList.toggle("is-hidden", goingDown);
+          } else if (reduceMotion) {
+            bar.classList.remove("is-hidden");
+          }
+        }
+
+        lastY = y;
+        ticking = false;
+      };
+
+      window.addEventListener("scroll", () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      }, { passive: true });
+
+      update();
+    })();
+
+    /* —— Live Telegram-style chat simulation —— */
+    (() => {
+      const feed = document.getElementById("tg-feed");
+      const typingEl = document.getElementById("tg-typing");
+      const typingLabel = document.getElementById("tg-typing-label");
+      const onlineEl = document.getElementById("tg-online");
+      const openBtn = document.getElementById("tg-open");
+      if (!feed) return;
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const MAX_VISIBLE = 18;
+      let members = 12847;
+      let online = 1204;
+
+      const users = [
+        { name: "ZTICH | Mod", role: "admin", color: "#ffe14a", bg: "#c8ff1a", initials: "MD" },
+        { name: "Ztich", role: "him", color: "#f4f1e6", bg: "#c8ff1a", initials: "Z" },
+        { name: "limeWhale.sol", role: "whale", color: "#7ec8ff", bg: "#7ec8ff", initials: "LW" },
+        { name: "deadpan", role: "orange", color: "#ffb347", bg: "#ffb347", initials: "DP" },
+        { name: "sara.sol", role: "pink", color: "#ff8ec8", bg: "#ff8ec8", initials: "SS" },
+        { name: "off.mute", role: "", color: "#c8ff1a", bg: "#2f6b45", initials: "OM" },
+        { name: "no.signal", role: "", color: "#c8ff1a", bg: "#9dff00", initials: "NS" },
+        { name: "tax0", role: "orange", color: "#ffb347", bg: "#f0a020", initials: "T0" },
+        { name: "blank.stare", role: "", color: "#c8ff1a", bg: "#9dff00", initials: "BS" },
+        { name: "cold.cut", role: "whale", color: "#7ec8ff", bg: "#5ab0e8", initials: "CC" },
+      ];
+
+      const starters = [
+        { user: 0, text: "CA is pinned. Match it before you buy.", react: "✅ 41" },
+        { user: 6, text: "he posted one word and left" },
+        { user: 1, text: "no." },
+        { user: 3, text: "the clips are him. that’s the only place he shows up.", react: "🫡 11" },
+        { user: 4, text: "Copied the CA. Swapped. He still hasn’t said anything else." },
+      ];
+
+      const replies = [
+        { user: 5, text: "wallet’s ready. he isn’t.", replyTo: true },
+        { user: 6, text: "that “no.” is the most he’s given us", replyTo: true },
+        { user: 7, text: "fit goes hard. he looks like he doesn’t know the camera’s on.", replyTo: true },
+        { user: 0, text: "Reminder: only the pinned CA. We’ll keep it up here.", replyTo: false },
+        { user: 2, text: "don’t @ him. he won’t answer.", replyTo: true },
+        { user: 4, text: "who just bought", replyTo: false },
+        { user: 6, text: "me. he didn’t notice. obviously.", replyTo: true },
+        { user: 9, text: "jewelry’s louder than he is", replyTo: true },
+        { user: 3, text: "baggy jeans. dead face. yeah.", replyTo: true },
+        { user: 5, text: "he’d skip his own AMA", replyTo: true },
+        { user: 7, text: "CA matches. we’re good.", replyTo: false },
+        { user: 2, text: "drop the new clip. no caption needed.", replyTo: true },
+        { user: 8, text: "he looks lost in that one. still the same walk.", replyTo: true },
+        { user: 1, text: "whatever.", replyTo: true },
+        { user: 4, text: "there he is. two words this week.", replyTo: true },
+        { user: 0, text: "How to buy is on the site. Three steps.", replyTo: false },
+        { user: 9, text: "chat’s loud because he isn’t", replyTo: true },
+        { user: 3, text: "the sneaker shot is dirty", replyTo: true },
+        { user: 6, text: "he doesn’t smile. the clips still work.", replyTo: true },
+        { user: 5, text: "group’s chaos. mascot’s somewhere else.", replyTo: false },
+        { user: 8, text: "where do I buy", replyTo: false },
+        { user: 0, text: "Buy on the site or paste the CA on pump.fun", replyTo: true },
+        { user: 4, text: "you’re in. he noticed nothing.", replyTo: true },
+        { user: 1, text: "not my problem.", replyTo: true },
+        { user: 2, text: "and he’s gone again", replyTo: true },
+        { user: 7, text: "gm if you already copied the CA", replyTo: false },
+        { user: 3, text: "3D model looks like it wants to leave", replyTo: true },
+      ];
+
+      const history = [];
+      let replyIdx = 0;
+
+      function pad(n) { return String(n).padStart(2, "0"); }
+
+      function nowTime() {
+        const d = new Date();
+        return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      }
+
+      function updateOnline() {
+        online += Math.floor(Math.random() * 7) - 2;
+        online = Math.max(1160, Math.min(1340, online));
+        if (Math.random() < 0.18) members += 1;
+        if (onlineEl) {
+          onlineEl.textContent = `${members.toLocaleString("en-US")} members · ${online.toLocaleString("en-US")} online`;
+        }
+      }
+
+      function truncate(str, n = 42) {
+        const clean = str.replace(/\s+/g, " ");
+        return clean.length > n ? clean.slice(0, n - 1) + "…" : clean;
+      }
+
+      function renderMessage(msg, animate) {
+        const u = users[msg.user];
+        const row = document.createElement("article");
+        row.className = "tg-row" + (msg.reply ? " is-reply" : "");
+        if (!animate || reduceMotion) row.style.animation = "none";
+
+        const face = document.createElement("div");
+        face.className = "tg-face";
+        face.style.background = u.bg;
+        face.textContent = u.initials;
+        face.setAttribute("aria-hidden", "true");
+
+        const bubble = document.createElement("div");
+        bubble.className = "tg-bubble";
+
+        const name = document.createElement("div");
+        name.className = "tg-name" + (u.role ? " " + u.role : "");
+        name.textContent = u.name;
+        bubble.appendChild(name);
+
+        if (msg.reply) {
+          const reply = document.createElement("div");
+          reply.className = "tg-reply";
+          const replyBody = document.createElement("div");
+          const who = document.createElement("div");
+          who.className = "tg-reply-who";
+          who.textContent = msg.reply.who;
+          const quote = document.createElement("div");
+          quote.className = "tg-reply-text";
+          quote.textContent = msg.reply.text;
+          replyBody.appendChild(who);
+          replyBody.appendChild(quote);
+          reply.appendChild(replyBody);
+          bubble.appendChild(reply);
+        }
+
+        const text = document.createElement("div");
+        text.className = "tg-text";
+        text.textContent = msg.text;
+        bubble.appendChild(text);
+
+        const meta = document.createElement("div");
+        meta.className = "tg-meta-line";
+        if (msg.react) {
+          const react = document.createElement("span");
+          react.className = "tg-react";
+          react.textContent = msg.react;
+          meta.appendChild(react);
+        }
+        const time = document.createElement("time");
+        time.className = "tg-time";
+        time.textContent = msg.time;
+        meta.appendChild(time);
+        bubble.appendChild(meta);
+
+        row.appendChild(face);
+        row.appendChild(bubble);
+        return row;
+      }
+
+      function pushMessage(msg, animate = true) {
+        history.push(msg);
+        const el = renderMessage(msg, animate);
+        feed.appendChild(el);
+
+        while (feed.querySelectorAll(".tg-row").length > MAX_VISIBLE) {
+          const first = feed.querySelector(".tg-row");
+          if (first) first.remove();
+        }
+
+        feed.scrollTop = feed.scrollHeight;
+        updateOnline();
+      }
+
+      function seed() {
+        const day = document.createElement("div");
+        day.className = "tg-day";
+        day.textContent = "Today";
+        feed.appendChild(day);
+
+        starters.forEach((s, i) => {
+          pushMessage({
+            user: s.user,
+            text: s.text,
+            time: `10:${pad(2 + i * 2)}`,
+            react: s.react || null,
+            reply: null,
+          }, false);
+        });
+        feed.scrollTop = feed.scrollHeight;
+      }
+
+      function pickReplyTarget() {
+        if (!history.length) return null;
+        const recent = history.slice(-6);
+        return recent[Math.floor(Math.random() * recent.length)];
+      }
+
+      function nextMessage() {
+        const template = replies[replyIdx % replies.length];
+        replyIdx += 1;
+
+        let user = template.user;
+        const last = history[history.length - 1];
+        /* Never reassign Ztich’s lines — those are his. */
+        if (template.user !== 1 && last && last.user === user) {
+          let next = (user + 1 + Math.floor(Math.random() * 3)) % users.length;
+          if (next === 1) next = (next + 1) % users.length;
+          user = next;
+        }
+
+        let reply = null;
+        if (template.replyTo !== false) {
+          const target = pickReplyTarget();
+          if (target && Math.random() < 0.72) {
+            reply = {
+              who: users[target.user].name,
+              text: truncate(target.text),
+            };
+          }
+        }
+
+        return {
+          user,
+          text: template.text,
+          time: nowTime(),
+          react: template.react || (Math.random() < 0.18 ? ["🔥 3", "😂 2", "🚀 5", "💚 4"][Math.floor(Math.random() * 4)] : null),
+          reply,
+        };
+      }
+
+      function showTyping(name) {
+        if (!typingEl) return;
+        typingLabel.textContent = `${name} is typing…`;
+        typingEl.classList.add("on");
+        typingEl.setAttribute("aria-hidden", "false");
+      }
+
+      function hideTyping() {
+        if (!typingEl) return;
+        typingEl.classList.remove("on");
+        typingEl.setAttribute("aria-hidden", "true");
+      }
+
+      function scheduleNext() {
+        const delay = 1800 + Math.random() * 3200;
+        setTimeout(() => {
+          const upcoming = nextMessage();
+          const who = users[upcoming.user].name;
+
+          if (!reduceMotion && upcoming.user !== 1 && Math.random() < 0.75) {
+            showTyping(who);
+            const typeFor = 700 + Math.random() * 1400;
+            setTimeout(() => {
+              hideTyping();
+              pushMessage(upcoming, true);
+              scheduleNext();
+            }, typeFor);
+          } else {
+            pushMessage(upcoming, true);
+            scheduleNext();
+          }
+        }, delay);
+      }
+
+      seed();
+      scheduleNext();
+
+      setInterval(updateOnline, 3800);
+
+      openBtn?.addEventListener("click", () => {
+        window.open("https://t.me/ztichcoin", "_blank", "noopener");
+      });
+    })();
+  </script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+</body>
+</html>
