@@ -324,24 +324,16 @@
       z-index: 2;
     }
 
-    .coin-float {
-      width: min(9.5rem, 42vw);
+    .buy-coin {
+      width: 5.5rem;
       height: auto;
       aspect-ratio: 1;
       border-radius: 50%;
       object-fit: cover;
       display: block;
-      flex-shrink: 0;
-      animation:
-        rise 0.7s ease both,
-        coin-bob 5s ease-in-out 0.7s infinite;
-      filter: drop-shadow(0 12px 28px rgba(157, 255, 0, 0.28))
-              drop-shadow(0 4px 18px rgba(255, 225, 74, 0.22));
-    }
-
-    @keyframes coin-bob {
-      0%, 100% { transform: translateY(0) rotate(-3deg); }
-      50% { transform: translateY(-10px) rotate(3deg); }
+      margin-bottom: 1.1rem;
+      filter: drop-shadow(0 8px 20px rgba(157, 255, 0, 0.22))
+              drop-shadow(0 3px 12px rgba(255, 225, 74, 0.16));
     }
 
     .ticker {
@@ -1090,30 +1082,55 @@
       .site-nav > nav { gap: 0.85rem; padding: 0.65rem var(--gutter); }
       .site-nav-spacer { height: 5.35rem; }
 
+      /* 3D becomes the mobile intro — in flow, not a faded corner */
       .stage {
-        top: auto;
-        bottom: 4.5rem;
-        right: -22vw;
-        width: 78vw;
-        height: 36vh;
-        height: 36dvh;
-        opacity: 0.55;
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: clamp(16.5rem, 44dvh, 24rem);
+        opacity: 1;
+        z-index: 1;
+        pointer-events: none;
       }
 
-      .stage::before { width: min(100%, 42vh); }
-      .stage::after { display: none; }
+      .stage::before {
+        width: min(90vw, 28rem);
+        opacity: 0.85;
+      }
+
+      .stage::after {
+        display: block;
+        bottom: 8%;
+        width: min(55%, 16rem);
+        height: 2.4rem;
+      }
 
       model-viewer {
         height: 100%;
-        pointer-events: none;
+        pointer-events: auto;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 0.35rem;
+        padding-bottom: 1.75rem;
+      }
+
+      .hero-main {
+        padding: 0.25rem 0 0.5rem;
+        text-align: left;
       }
 
       .panel p, .trust-line, .ca, .section-lead, .steps p {
         text-shadow: 0 1px 14px rgba(8, 18, 12, 0.85);
       }
 
-      .hero-main { padding-top: 1.25rem; }
-      .coin-float { width: min(7.5rem, 38vw); }
+      .buy-coin {
+        width: 4.25rem;
+        margin-bottom: 0.9rem;
+      }
+
       .buy-bar { display: flex; }
 
       .clip-reel {
@@ -1136,7 +1153,7 @@
 
       .tg-actions { display: none; }
 
-      .hero { padding-top: 1rem; }
+      .ticker { font-size: clamp(3.6rem, 18vw, 5.75rem); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1201,7 +1218,6 @@
 
   <header class="hero panel">
     <div class="hero-main">
-      <img class="coin-float" src="/ztich-coin.jpg?v=2" alt="$ZTICH coin" width="160" height="160" />
       <h1 class="ticker">$ZTICH</h1>
       <p class="tagline">Ztich doesn’t care if you buy. Zero tax. Solana. Do what you want.</p>
       <blockquote class="said">
@@ -1220,9 +1236,10 @@
   </header>
 
   <section class="panel panel-tight" id="buy">
-    <p class="section-kicker">Guide</p>
+    <img class="buy-coin" src="/ztich-coin.jpg?v=2" alt="$ZTICH coin" width="88" height="88" />
+    <p class="section-kicker">Three steps</p>
     <h2 class="section-title">How to buy $ZTICH</h2>
-    <p class="section-lead">Ztich won’t help. We will. It takes about two minutes.</p>
+    <p class="section-lead">Wallet, CA, swap. About two minutes.</p>
     <ol class="steps">
       <li>
         <div>
@@ -1376,6 +1393,19 @@
         mv.removeAttribute("auto-rotate");
       }
 
+      const mobile = window.matchMedia("(max-width: 860px)");
+      const fitCamera = () => {
+        if (mobile.matches) {
+          mv.setAttribute("camera-orbit", "6deg 78deg auto");
+          mv.setAttribute("field-of-view", "28deg");
+        } else {
+          mv.setAttribute("camera-orbit", "25deg 80deg auto");
+          mv.setAttribute("field-of-view", "22deg");
+        }
+      };
+      fitCamera();
+      mobile.addEventListener("change", fitCamera);
+
       const reveal = () => {
         try { mv.dismissPoster(); } catch {}
         mv.classList.add("is-ready");
@@ -1466,51 +1496,48 @@
         { name: "ZTICH | Mod", role: "admin", color: "#ffe14a", bg: "#c8ff1a", initials: "MD" },
         { name: "Ztich", role: "him", color: "#f4f1e6", bg: "#c8ff1a", initials: "Z" },
         { name: "limeWhale.sol", role: "whale", color: "#7ec8ff", bg: "#7ec8ff", initials: "LW" },
-        { name: "deadpan", role: "orange", color: "#ffb347", bg: "#ffb347", initials: "DP" },
+        { name: "juno.bags", role: "orange", color: "#ffb347", bg: "#ffb347", initials: "JB" },
         { name: "sara.sol", role: "pink", color: "#ff8ec8", bg: "#ff8ec8", initials: "SS" },
-        { name: "off.mute", role: "", color: "#c8ff1a", bg: "#2f6b45", initials: "OM" },
-        { name: "no.signal", role: "", color: "#c8ff1a", bg: "#9dff00", initials: "NS" },
+        { name: "mica", role: "", color: "#c8ff1a", bg: "#2f6b45", initials: "MI" },
+        { name: "ray.sol", role: "", color: "#c8ff1a", bg: "#9dff00", initials: "RS" },
         { name: "tax0", role: "orange", color: "#ffb347", bg: "#f0a020", initials: "T0" },
-        { name: "blank.stare", role: "", color: "#c8ff1a", bg: "#9dff00", initials: "BS" },
-        { name: "cold.cut", role: "whale", color: "#7ec8ff", bg: "#5ab0e8", initials: "CC" },
+        { name: "kit", role: "", color: "#c8ff1a", bg: "#9dff00", initials: "KT" },
+        { name: "dexed", role: "whale", color: "#7ec8ff", bg: "#5ab0e8", initials: "DX" },
       ];
 
       const starters = [
-        { user: 0, text: "CA is pinned. Match it before you buy.", react: "✅ 41" },
-        { user: 6, text: "he posted one word and left" },
-        { user: 1, text: "no." },
-        { user: 3, text: "the clips are him. that’s the only place he shows up.", react: "🫡 11" },
-        { user: 4, text: "Copied the CA. Swapped. He still hasn’t said anything else." },
+        { user: 0, text: "CA is pinned. Match it before you buy.", react: "✅ 8" },
+        { user: 6, text: "new clip is up. the walk in that one" },
+        { user: 4, text: "copied the CA. swapping now" },
+        { user: 3, text: "flannel + jewelry in clip 2 is dirty", react: "🔥 6" },
+        { user: 2, text: "just got a bag. 3D on the site slaps" },
       ];
 
       const replies = [
-        { user: 5, text: "wallet’s ready. he isn’t.", replyTo: true },
-        { user: 6, text: "that “no.” is the most he’s given us", replyTo: true },
-        { user: 7, text: "fit goes hard. he looks like he doesn’t know the camera’s on.", replyTo: true },
-        { user: 0, text: "Reminder: only the pinned CA. We’ll keep it up here.", replyTo: false },
-        { user: 2, text: "don’t @ him. he won’t answer.", replyTo: true },
-        { user: 4, text: "who just bought", replyTo: false },
-        { user: 6, text: "me. he didn’t notice. obviously.", replyTo: true },
-        { user: 9, text: "jewelry’s louder than he is", replyTo: true },
-        { user: 3, text: "baggy jeans. dead face. yeah.", replyTo: true },
-        { user: 5, text: "he’d skip his own AMA", replyTo: true },
+        { user: 5, text: "wallet’s ready. doing the swap", replyTo: true },
+        { user: 7, text: "fit goes hard. sneakers too", replyTo: true },
+        { user: 0, text: "Only the pinned CA. We’ll keep it up here.", replyTo: false },
+        { user: 4, text: "who else just got in", replyTo: false },
+        { user: 6, text: "me. site made it easy", replyTo: true },
+        { user: 9, text: "that gold coin art is clean", replyTo: true },
+        { user: 3, text: "baggy jeans. that’s the look.", replyTo: true },
         { user: 7, text: "CA matches. we’re good.", replyTo: false },
-        { user: 2, text: "drop the new clip. no caption needed.", replyTo: true },
-        { user: 8, text: "he looks lost in that one. still the same walk.", replyTo: true },
-        { user: 1, text: "whatever.", replyTo: true },
-        { user: 4, text: "there he is. two words this week.", replyTo: true },
+        { user: 2, text: "drop the other clip in here", replyTo: true },
+        { user: 8, text: "the sneaker shot is the one", replyTo: true },
         { user: 0, text: "How to buy is on the site. Three steps.", replyTo: false },
-        { user: 9, text: "chat’s loud because he isn’t", replyTo: true },
-        { user: 3, text: "the sneaker shot is dirty", replyTo: true },
-        { user: 6, text: "he doesn’t smile. the clips still work.", replyTo: true },
-        { user: 5, text: "group’s chaos. mascot’s somewhere else.", replyTo: false },
+        { user: 9, text: "gm. already copied it", replyTo: false },
+        { user: 5, text: "is it 0 tax", replyTo: false },
+        { user: 0, text: "0/0. Solana. Check the CA anyway.", replyTo: true },
         { user: 8, text: "where do I buy", replyTo: false },
         { user: 0, text: "Buy on the site or paste the CA on pump.fun", replyTo: true },
-        { user: 4, text: "you’re in. he noticed nothing.", replyTo: true },
-        { user: 1, text: "not my problem.", replyTo: true },
-        { user: 2, text: "and he’s gone again", replyTo: true },
-        { user: 7, text: "gm if you already copied the CA", replyTo: false },
-        { user: 3, text: "3D model looks like it wants to leave", replyTo: true },
+        { user: 4, text: "you’re in. welcome", replyTo: true },
+        { user: 1, text: "whatever.", replyTo: true },
+        { user: 7, text: "lmao there he is", replyTo: true },
+        { user: 3, text: "3D model on mobile is actually nice", replyTo: false },
+        { user: 6, text: "yeah I spun him for like a minute", replyTo: true },
+        { user: 2, text: "sending the site to people. clips first", replyTo: false },
+        { user: 9, text: "that’s the play", replyTo: true },
+        { user: 5, text: "group’s up. feels good in here", replyTo: false },
       ];
 
       const history = [];
